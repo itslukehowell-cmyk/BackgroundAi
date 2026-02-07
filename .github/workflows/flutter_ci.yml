@@ -1,4 +1,5 @@
-# Flutter CI
+# This file contains the CI/CD configuration for Flutter projects.
+# It includes steps for testing and building the iOS and Android applications.
 
 name: Flutter CI
 
@@ -6,33 +7,37 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-
+    runs-on: macos-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up JDK
-        uses: actions/setup-java@v1
-        with:
-          java-version: '11'
-
-      - name: Install Flutter
+      - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.0.0'
+          flutter-version: '3.0.1'
 
-      - name: Run Flutter Pub Get
-        run: flutter pub get
+      - name: Install Dependencies
+        run: |
+          flutter pub get
 
-      - name: Run tests
-        run: flutter test
+      - name: Build Android App
+        run: |
+          flutter build apk --debug
 
-      - name: Build Flutter App
-        run: flutter build apk
+      - name: Test Android App
+        run: |
+          flutter test
+
+      # New steps for iOS build
+      - name: Install CocoaPods
+        run: |
+          cd ios
+          pod install
+
+      - name: Build iOS App
+        run: |
+          flutter build ios --no-codesign
