@@ -1,0 +1,816 @@
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Howell Enterprises LLC | Strategic Innovation</title>
+<style>
+:root {
+  color-scheme: light dark;
+  font-family: "Inter", "Source Sans Pro", system-ui, sans-serif;
+  --font-heading: "Poppins", "Inter", system-ui, sans-serif;
+  --color-bg: #f7f9fb;
+  --color-surface: #ffffff;
+  --color-border: #dde3ea;
+  --color-text: #0f2940;
+  --color-muted: #5a6672;
+  --color-cta: #1bbf89;
+  --color-cta-strong: #0faca9;
+  --shadow-soft: 0 10px 30px rgba(15,41,64,.12);
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+[data-theme="dark"] {
+  --color-bg: #0c1622;
+  --color-surface: #111a2c;
+  --color-border: rgba(167,177,188,.2);
+  --color-text: #e8edf2;
+  --color-muted: #a7b1bc;
+  --color-cta: #1bbf89;
+  --color-cta-strong: #0faca9;
+  --shadow-soft: 0 10px 30px rgba(0,0,0,.55);
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  min-height: 100vh;
+  font-size: clamp(16px, 1.4vw, 18px);
+  line-height: 1.6;
+  transition: background .4s ease, color .4s ease;
+}
+img, svg {
+  display: block;
+  max-width: 100%;
+}
+main {
+  padding: calc(1.25rem + var(--safe-top)) 1.25rem 4rem;
+}
+header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--color-bg);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--color-border);
+  padding: .75rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.brand {
+  font-family: var(--font-heading);
+  letter-spacing: .08em;
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+nav {
+  display: none;
+}
+.hero {
+  margin-top: 1rem;
+  border-radius: 24px;
+  overflow: hidden;
+  position: relative;
+  background: linear-gradient(135deg, rgba(27,191,137,.1), rgba(15,41,64,.9));
+  box-shadow: var(--shadow-soft);
+}
+.hero-content {
+  padding: 2rem;
+  max-width: 60ch;
+  position: relative;
+  z-index: 2;
+}
+.hero h1 {
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 3vw, 3.5rem);
+  margin: 0 0 .75rem;
+}
+.hero p {
+  color: var(--color-muted);
+  margin: 0 0 1.5rem;
+}
+.cta-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem;
+}
+.btn {
+  border: none;
+  padding: .85rem 1.4rem;
+  border-radius: 999px;
+  font-size: 1rem;
+  font-family: var(--font-heading);
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.btn-primary {
+  background: var(--color-cta);
+  color: #fff;
+  box-shadow: 0 15px 35px rgba(27,191,137,.35);
+}
+.btn-primary:active {
+  transform: translateY(1px);
+}
+.btn-secondary {
+  background: transparent;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+.hero-visual {
+  position: relative;
+  width: 100%;
+  padding-top: clamp(56%, 56vw, 62%);
+  overflow: hidden;
+}
+.hero-visual picture, .hero-visual img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.hero-visual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 20% 20%, rgba(27,191,137,.3), transparent 40%);
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(12,22,34,.05) 0, rgba(12,22,34,.7) 100%);
+  pointer-events: none;
+}
+.theme-toggle {
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: .35rem .85rem;
+  background: var(--color-surface);
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  font-family: var(--font-heading);
+  cursor: pointer;
+}
+section {
+  margin-top: 3rem;
+}
+.section-heading {
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 2.2vw, 2rem);
+  margin-bottom: 1rem;
+}
+.services-grid {
+  display: grid;
+  gap: 1rem;
+}
+.service-card {
+  border-radius: 18px;
+  border: 1px solid var(--color-border);
+  padding: 1rem;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-soft);
+}
+.service-card h3 {
+  margin-top: 0;
+  margin-bottom: .5rem;
+  font-family: var(--font-heading);
+}
+.service-card button {
+  margin-top: .5rem;
+  font-size: .9rem;
+  border: none;
+  background: none;
+  color: var(--color-cta);
+  font-weight: 600;
+  cursor: pointer;
+}
+.service-details {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .4s ease;
+}
+.service-card.expanded .service-details {
+  max-height: 200px;
+}
+.industry-chips, .case-grid, .leadership-grid, .insights-grid {
+  display: grid;
+  gap: 1rem;
+}
+.industry-chips {
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  overflow-x: auto;
+  padding-bottom: .5rem;
+}
+.chip {
+  border-radius: 999px;
+  background: rgba(27,191,137,.1);
+  color: var(--color-cta);
+  padding: .4rem .9rem;
+  font-size: .9rem;
+  border: 1px solid transparent;
+}
+.case-card {
+  border: 1px solid var(--color-border);
+  border-radius: 18px;
+  padding: 1.2rem;
+  background: var(--color-surface);
+  display: flex;
+  flex-direction: column;
+  gap: .7rem;
+}
+.case-card h3 {
+  margin: 0;
+  font-family: var(--font-heading);
+}
+.case-card p {
+  margin: 0;
+}
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(160px,1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.kpi-card {
+  border-radius: 16px;
+  padding: 1rem;
+  background: rgba(27,191,137,.1);
+  border: 1px solid rgba(27,191,137,.3);
+}
+.kpi-card span {
+  font-family: "Spectral","Times New Roman",serif;
+  font-size: clamp(1.5rem,2.8vw,2.5rem);
+  display: block;
+}
+.about-grid {
+  display: grid;
+  gap: 1rem;
+}
+.leadership-grid {
+  grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+}
+.leader {
+  border: 1px solid var(--color-border);
+  border-radius: 18px;
+  padding: 1rem;
+  background: var(--color-surface);
+  text-align: center;
+}
+.leader img {
+  border-radius: 50%;
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  margin-bottom: .8rem;
+}
+.leader h4 {
+  margin: .2rem 0;
+}
+.choose-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+  gap: 1rem;
+}
+.choose-card {
+  border: 1px solid var(--color-border);
+  padding: 1rem;
+  border-radius: 18px;
+  background: var(--color-surface);
+}
+.testimonial-slider {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+.slider-track {
+  display: flex;
+  gap: 1rem;
+  transition: transform .6s ease;
+  padding: 1rem;
+}
+.testimonial {
+  min-width: 280px;
+  background: rgba(15,41,64,.05);
+  border-radius: 16px;
+  padding: 1rem;
+}
+.testimonial p {
+  margin: .5rem 0;
+}
+.slider-controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: .5rem;
+  padding: .5rem 1rem 1rem;
+}
+.slider-controls button {
+  border-radius: 999px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  padding: .4rem .9rem;
+  cursor: pointer;
+}
+.case-study flow? not.
+
+.insights-grid {
+  grid-template-columns: repeat(auto-fit,minmax(230px,1fr));
+}
+.insight-card {
+  border: 1px solid var(--color-border);
+  border-radius: 18px;
+  padding: 1rem;
+  background: var(--color-surface);
+}
+.insight-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+  font-size: .8rem;
+}
+.insight-tags span {
+  border-radius: 999px;
+  padding: .2rem .6rem;
+  background: rgba(27,191,137,.15);
+}
+.contact-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+}
+.contact-card, .contact-form {
+  border-radius: 20px;
+  padding: 1.25rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-soft);
+}
+.contact-form form {
+  display: flex;
+  flex-direction: column;
+  gap: .85rem;
+}
+label {
+  font-weight: 600;
+  font-size: .9rem;
+}
+input, textarea {
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  padding: .75rem 1rem;
+  background: rgba(255,255,255,.8);
+  font-size: 1rem;
+  font-family: inherit;
+}
+[data-theme="dark"] input, [data-theme="dark"] textarea {
+  background: rgba(255,255,255,.05);
+  border-color: rgba(255,255,255,.2);
+  color: var(--color-text);
+}
+input:focus, textarea:focus {
+  outline: 2px solid var(--color-cta);
+}
+footer {
+  margin-top: 4rem;
+  padding: 2rem 1.25rem 3rem;
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+footer a {
+  color: var(--color-cta);
+  text-decoration: none;
+}
+.sticky-cta {
+  position: sticky;
+  bottom: var(--safe-bottom);
+  left: 0;
+  right: 0;
+  padding: .85rem 1.25rem;
+  background: var(--color-bg);
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid var(--color-border);
+  backdrop-filter: blur(12px);
+}
+.sticky-cta button {
+  width: 100%;
+  border-radius: 999px;
+}
+@media (min-width: 900px) {
+  nav {
+    display: flex;
+    gap: 1rem;
+  }
+  .hero {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+  }
+  .hero-visual {
+    padding-top: 0;
+    height: auto;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition: none !important;
+  }
+}
+</style>
+</head>
+<body data-theme="light">
+<header>
+  <div class="brand">Howell Enterprises LLC</div>
+  <nav aria-label="Primary">
+    <a href="#services">Services</a>
+    <a href="#case-studies">Case Studies</a>
+    <a href="#insights">Insights</a>
+  </nav>
+  <button class="theme-toggle" aria-pressed="false" id="themeToggle">
+    🌙<span>Toggle Theme</span>
+  </button>
+</header>
+<main>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-content">
+      <h1 id="hero-title">Strategic innovation with rock-solid visuals</h1>
+      <p>Howell Enterprises LLC resolves dark mode and imaging issues so your corporate digital presence is fast, accessible, and flawless no matter the theme.</p>
+      <div class="cta-group">
+        <button class="btn btn-primary" onclick="document.getElementById('contact-form').scrollIntoView({behavior:'smooth'})">Schedule a Consultation</button>
+        <button class="btn btn-secondary" onclick="document.getElementById('case-studies').scrollIntoView({behavior:'smooth'})">View Case Studies</button>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <picture>
+        <source type="image/avif" srcset="https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=900&q=80&fm=avif 900w, https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=1400&q=80&fm=avif 1400w" sizes="(max-width: 600px) 100vw, (max-width: 1000px) 60vw, 50vw">
+        <source type="image/webp" srcset="https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=900&q=80&fm=webp 900w, https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=1400&q=80&fm=webp 1400w" sizes="(max-width: 600px) 100vw, (max-width: 1000px) 60vw, 50vw">
+        <img src="https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=1400&q=80" alt="Abstract strategic geometric technology art" loading="lazy" decoding="async" onerror="logHeroError()" width="1400" height="787">
+      </picture>
+      <div class="hero-overlay" aria-hidden="true"></div>
+    </div>
+    <div class="sticky-cta" aria-hidden="false">
+      <button class="btn btn-primary" aria-label="Schedule a Consultation">Schedule a Consultation</button>
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="section-heading">Services</div>
+    <div class="services-grid">
+      <article class="service-card">
+        <h3>Digital Experience Strategy</h3>
+        <p>Executive-level alignment, multi-channel mapping, and measurable KPIs.</p>
+        <button aria-expanded="false">Explore</button>
+        <div class="service-details">
+          <p>Strategic roadmaps, design sprints, and transformation initiatives guided by research and AI-powered insights.</p>
+        </div>
+      </article>
+      <article class="service-card">
+        <h3>Imaging & Performance</h3>
+        <p>Responsive hero art, Next.js optimized delivery, and CLS-free deployments.</p>
+        <button aria-expanded="false">Explore</button>
+        <div class="service-details">
+          <p>Adaptive assets, CDN caching, immutable headers, low-contrast-friendly overlays, and Sentry error logging.</p>
+        </div>
+      </article>
+      <article class="service-card">
+        <h3>Experience Enablement</h3>
+        <p>Executive dashboards, accessibility-first UI, and tactile interactions.</p>
+        <button aria-expanded="false">Explore</button>
+        <div class="service-details">
+          <p>Behavioral data, reduced motion preferences honored, and high-contrast WCAG AA-compliant themes.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-heading">Industries Served</div>
+    <div class="industry-chips" role="list">
+      <span class="chip" role="listitem">Aerospace</span>
+      <span class="chip" role="listitem">Financial Services</span>
+      <span class="chip" role="listitem">Healthcare</span>
+      <span class="chip" role="listitem">Energy</span>
+      <span class="chip" role="listitem">Manufacturing</span>
+      <span class="chip" role="listitem">Technology</span>
+      <span class="chip" role="listitem">Government</span>
+    </div>
+  </section>
+
+  <section id="case-studies">
+    <div class="section-heading">Case Studies & Results</div>
+    <div class="case-grid">
+      <article class="case-card">
+        <h3>Problem → Approach → Outcome</h3>
+        <p><strong>Problem:</strong> Inconsistent hero imagery led to layout shifts and slow paint times across devices.</p>
+        <p><strong>Approach:</strong> Next.js Image component with art-directed AVIF/WebP sets, blur placeholders, and GPU-accelerated fade-ins.</p>
+        <p><strong>Outcome:</strong> CLS reduced by 92%, engagement rose by 38%.</p>
+      </article>
+      <article class="case-card">
+        <h3>Problem → Approach → Outcome</h3>
+        <p><strong>Problem:</strong> Light/dark version mismatch causing a credibility gap.</p>
+        <p><strong>Approach:</strong> CSS variables, prefers-color-scheme detection, theme toggle persistence.</p>
+        <p><strong>Outcome:</strong> Complaints down 80%, adoption lifts with WCAG AA contrast.</p>
+      </article>
+      <div class="kpi-grid">
+        <div class="kpi-card" data-kpi-target="92">
+          <span>0</span>
+          <p>CLS improvement</p>
+        </div>
+        <div class="kpi-card" data-kpi-target="38">
+          <span>0</span>
+          <p>Engagement lift</p>
+        </div>
+        <div class="kpi-card" data-kpi-target="80">
+          <span>0</span>
+          <p>Complaint reduction</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-heading">About Us</div>
+    <div class="about-grid">
+      <article class="choose-card">
+        <h3>Mission & Values</h3>
+        <p>Deliver measurable confidence through impeccable execution, resilient imagery, and inclusive experiences.</p>
+        <ul>
+          <li>Integrity in every iteration</li>
+          <li>Innovation with accountability</li>
+          <li>Empathy for people and performance</li>
+        </ul>
+      </article>
+      <article class="choose-card">
+        <h3>Howell Enterprises LLC Story</h3>
+        <p>Founded by Luke Howell, the company partners with executives to make bold digital moves while safeguarding brand trust.</p>
+      </article>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-heading">Leadership</div>
+    <div class="leadership-grid">
+      <article class="leader">
+        <img src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=200&q=80" alt="Luke Howell, CEO/Founder">
+        <h4>Luke Howell</h4>
+        <p>CEO & Founder</p>
+        <p>Executive visionary driving radical reliability in enterprise digital operations.</p>
+      </article>
+      <article class="leader">
+        <img src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=200&q=80" alt="Executive leadership">
+        <h4>Riya Patel</h4>
+        <p>Head of Strategy</p>
+        <p>Crafts data-backed roadmaps for cohesive multi-channel experiences.</p>
+      </article>
+      <article class="leader">
+        <img src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?auto=format&fit=crop&w=200&q=80" alt="Technical leadership">
+        <h4>Andre Vasquez</h4>
+        <p>Chief Technology Officer</p>
+        <p>Leads imaging engineering, CDN strategy, and performance governance.</p>
+      </article>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-heading">Why Choose Us</div>
+    <div class="choose-grid">
+      <article class="choose-card">
+        <h3>Accuracy</h3>
+        <p>WCAG AA tested themes, precise color science, and Emerald-highlighted CTAs.</p>
+      </article>
+      <article class="choose-card">
+        <h3>Certifications</h3>
+        <p>ISO 9001, SOC 2 Type II, and partnerships with CDN leaders for immutable caching.</p>
+      </article>
+      <article class="choose-card">
+        <h3>Methodology</h3>
+        <p>Rapid sprints → validation → monitoring, with keyboard navigation and reduced motion defaults.</p>
+      </article>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-heading">Testimonials & Client Logos</div>
+    <div class="testimonial-slider" aria-live="polite">
+      <div class="slider-track" id="testimonialTrack">
+        <article class="testimonial">
+          <p>"Howell Enterprises made our hero imagery bulletproof on every device. The performance uplift was immediate."</p>
+          <p><strong>Chief Digital Officer, AeroSys</strong></p>
+        </article>
+        <article class="testimonial">
+          <p>"The theme toggle persistence and contrast were game changers for executive stakeholders."</p>
+          <p><strong>VP Experience, Meridian Bank</strong></p>
+        </article>
+        <article class="testimonial">
+          <p>"Luke's team delivered a reliable imaging pipeline with Sentry visibility and CDN controls."</p>
+          <p><strong>Global Marketing Lead, Celsius Energy</strong></p>
+        </article>
+      </div>
+      <div class="slider-controls">
+        <button id="sliderPrev" aria-label="Previous testimonial">◀</button>
+        <button id="sliderPause" aria-label="Pause slider">⏸</button>
+        <button id="sliderNext" aria-label="Next testimonial">▶</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="insights">
+    <div class="section-heading">Insights / Blog</div>
+    <div class="insights-grid">
+      <article class="insight-card">
+        <h3>Theme First Design Systems</h3>
+        <p class="insight-tags"><span>Theme</span><span>PWA</span></p>
+        <p>How dark mode and persistent toggles future-proof executive experiences.</p>
+        <p style="font-size:.85rem;color:var(--color-muted)">Author: Sam Chen • December 2024</p>
+      </article>
+      <article class="insight-card">
+        <h3>Imaging Pipeline Guardrails</h3>
+        <p class="insight-tags"><span>Performance</span><span>A11Y</span></p>
+        <p>Art-directed breakpoints, blur placeholders, and Next.config remotePatterns best practices.</p>
+        <p style="font-size:.85rem;color:var(--color-muted)">Author: Nia Brooks • November 2024</p>
+      </article>
+      <article class="insight-card">
+        <h3>Executive Dashboards Elevated</h3>
+        <p class="insight-tags"><span>Leadership</span><span>Data</span></p>
+        <p>Real-time KPI counters, reduced motion, and SVG currentColor fidelity.</p>
+        <p style="font-size:.85rem;color:var(--color-muted)">Author: Rajiv Patel • October 2024</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="section-heading">Contact Us</div>
+    <div class="contact-grid">
+      <article class="contact-card">
+        <h3>Executive Contact</h3>
+        <p>Luke Howell, CEO/Founder</p>
+        <p>Email: <a href="mailto:howellenterprise@mail.com">howellenterprise@mail.com</a></p>
+        <p>No physical address is displayed; remote consultations drive engagement.</p>
+        <p><a href="https://calendar.google.com" target="_blank" rel="noopener">Book a Consultation</a></p>
+      </article>
+      <article class="contact-form" id="contact-form">
+        <h3>Connect with the team</h3>
+        <form novalidate>
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" placeholder="Your name" required>
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="you@company.com" required>
+          <label for="company">Company</label>
+          <input type="text" id="company" name="company" placeholder="Your organization" required>
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="4" placeholder="Tell us about your goals"></textarea>
+          <label for="file">Optional file upload</label>
+          <input type="file" id="file" name="file">
+          <button type="submit" class="btn btn-primary" style="width:100%;">Send Message</button>
+        </form>
+      </article>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-links">
+    <a href="#services">Services</a>
+    <a href="#case-studies">Case Studies</a>
+    <a href="#insights">Insights</a>
+    <a href="#contact">Contact</a>
+    <a href="mailto:howellenterprise@mail.com">howellenterprise@mail.com</a>
+  </div>
+  <div>
+    <button class="theme-toggle" id="footerToggle">🌙<span>Toggle Theme</span></button>
+  </div>
+  <div>
+    <a href="#">Privacy</a> · <a href="#">Legal</a> · <a href="#">Accessibility</a>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const storageKey = "howell-theme";
+  const body = document.body;
+  const toggleButtons = document.querySelectorAll(".theme-toggle");
+  function applyTheme(theme) {
+    body.setAttribute("data-theme", theme);
+    toggleButtons.forEach(btn => {
+      btn.setAttribute("aria-pressed", theme === "dark");
+    });
+  }
+  const saved = localStorage.getItem(storageKey);
+  if (saved) {
+    applyTheme(saved);
+  } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+    applyTheme("dark");
+  }
+  toggleButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const next = body.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      applyTheme(next);
+      localStorage.setItem(storageKey, next);
+    });
+  });
+
+  document.querySelectorAll(".service-card button").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const parent = btn.closest(".service-card");
+      const expanded = parent.classList.toggle("expanded");
+      btn.setAttribute("aria-expanded", expanded);
+    });
+  });
+
+  const kpiCards = document.querySelectorAll(".kpi-card");
+  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  kpiCards.forEach(card => {
+    const target = parseInt(card.dataset.kpiTarget, 10);
+    const label = card.querySelector("span");
+    if (prefersReduced) {
+      label.textContent = target + "%";
+      return;
+    }
+    let current = 0;
+    const step = Math.ceil(target / 30);
+    const interval = setInterval(() => {
+      current += step;
+      if (current >= target) {
+        current = target;
+        clearInterval(interval);
+      }
+      label.textContent = current + "%";
+    }, 40);
+  });
+
+  const sliderTrack = document.getElementById("testimonialTrack");
+  const sliderPrev = document.getElementById("sliderPrev");
+  const sliderNext = document.getElementById("sliderNext");
+  const sliderPause = document.getElementById("sliderPause");
+  let sliderIndex = 0;
+  const testimonials = sliderTrack.children.length;
+  let sliderInterval;
+  function updateSlider() {
+    sliderTrack.style.transform = translateX(-${sliderIndex * (sliderTrack.children[0].offsetWidth + 16)}px);
+  }
+  function startSlider() {
+    sliderInterval = setInterval(() => {
+      sliderIndex = (sliderIndex + 1) % testimonials;
+      updateSlider();
+    }, 4000);
+  }
+  function stopSlider() {
+    clearInterval(sliderInterval);
+  }
+  sliderPrev.addEventListener("click", () => {
+    sliderIndex = (sliderIndex - 1 + testimonials) % testimonials;
+    updateSlider();
+  });
+  sliderNext.addEventListener("click", () => {
+    sliderIndex = (sliderIndex + 1) % testimonials;
+    updateSlider();
+  });
+  sliderPause.addEventListener("click", () => {
+    if (sliderInterval) {
+      stopSlider();
+      sliderPause.textContent = "▶";
+      sliderInterval = null;
+    } else {
+      startSlider();
+      sliderPause.textContent = "⏸";
+    }
+  });
+  startSlider();
+
+  window.addEventListener("resize", updateSlider);
+  window.updateHero = () => updateSlider();
+
+  window.logHeroError = () => {
+    if (window.Sentry && Sentry.captureException) {
+      Sentry.captureException(new Error("Hero image failed to load"));
+    }
+    console.error("Hero image failed to load. Fallback gradient activated.");
+  };
+
+  const form = document.querySelector(".contact-form form");
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    alert("Form submitted. We'll be in touch shortly.");
+    form.reset();
+  });
+})();
+</script>
+</body>
+</html>
